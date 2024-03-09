@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Contraseñas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generador de Contraseñas</h1>
+
+    <form id="passwordForm">
+        <label for="numMayus">Número de mayúsculas:</label>
+        <input type="number" id="numMayus" min="0" value="3"><br>
+
+        <label for="numMinus">Número de minúsculas:</label>
+        <input type="number" id="numMinus" min="0" value="3"><br>
+
+        <label for="numNum">Número de números:</label>
+        <input type="number" id="numNum" min="0" value="3"><br>
+
+        <label for="numSymbols">Número de símbolos:</label>
+        <input type="number" id="numSymbols" min="0" value="3"><br>
+
+        <button type="button" onclick="generarContrasena()">Generar Contraseña</button>
+    </form>
+
+    <h2 id="contrasenaGenerada"></h2>
+
+    <script>
+        function generarContrasena() {
+            var numMayus = document.getElementById("numMayus").value;
+            var numMinus = document.getElementById("numMinus").value;
+            var numNum = document.getElementById("numNum").value;
+            var numSymbols = document.getElementById("numSymbols").value;
+
+            var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}|;:,.<>?";
+            var contrasenaArray = [];
+
+            // Agregar caracteres a la lista según la cantidad especificada
+            contrasenaArray = contrasenaArray.concat(Array.from(caracteres.slice(0, numMayus)));
+            contrasenaArray = contrasenaArray.concat(Array.from(caracteres.slice(26, 26 + numMinus)));
+            contrasenaArray = contrasenaArray.concat(Array.from(caracteres.slice(52, 52 + numNum)));
+            contrasenaArray = contrasenaArray.concat(Array.from(caracteres.slice(62, 62 + numSymbols)));
+
+            // Mezclar la lista para que los caracteres estén en orden aleatorio
+            contrasenaArray.sort(() => Math.random() - 0.5);
+
+            // Convertir la lista a una cadena para obtener la contraseña final
+            var contrasenaGenerada = contrasenaArray.join("");
+            document.getElementById("contrasenaGenerada").innerText = "Contraseña generada: " + contrasenaGenerada;
+        }
+    </script>
+</body>
+</html>
